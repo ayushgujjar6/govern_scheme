@@ -171,13 +171,13 @@ const Yojana = () => {
                         </button>
                         <form onSubmit={submitFormHandler} className="space-y-4 mt-3">
                             <input ref={nameInputRef} type="text" placeholder="New Yojana Name" required className="w-full p-2 border rounded-md" defaultValue={formData?.yojana_type || ""} />
-                            <input ref={categoryRef} type="text" placeholder="Yojana Category" required className="w-full p-2 border rounded-md" />
-                            <input ref={subCategoryRef} type="text" placeholder="Sub Category" required className="w-full p-2 border rounded-md" />
+                            <input ref={categoryRef} type="text" placeholder="Yojana Category" required className="w-full p-2 border rounded-md" defaultValue={formData?.category_id || ""} />
+                            <input ref={subCategoryRef} type="text" placeholder="Sub Category" required className="w-full p-2 border rounded-md" defaultValue={formData?.sub_category_id || ""} />
                             <select ref={statusInputRef} className="w-full p-2 border rounded-md" required defaultValue={formData?.status || "Active"}>
                                 <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
+                                <option value="Deactive">Deactive</option>
                             </select>
-                            <input ref={linkInputRef} type="text" placeholder="Links" required className="w-full p-2 border rounded-md" />
+                            <input ref={linkInputRef} type="text" placeholder="Links" required className="w-full p-2 border rounded-md" defaultValue={formData?.link || ""}/>
                             <textarea ref={detailsInputRef} placeholder="Details" required className="w-full p-2 border rounded-md h-24" />
                             <button type="submit" className="w-full py-2 bg-blue-500 text-white rounded-md">
                                 {formData ? "Update Yojana" : "Add Yojana"}
