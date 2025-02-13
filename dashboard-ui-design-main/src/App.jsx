@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/contexts/theme-context";
 import Layout from "@/routes/layout";
 import DashboardPage from "@/routes/page";
 import Yojana from "@/routes/yojana";
-import NewYojana from "/routes/new-yojana";
 
 function App() {
     const router = createBrowserRouter([
@@ -28,10 +27,6 @@ function App() {
                 {
                     path: "yojana",
                     element: <Yojana />,
-                },
-                {
-                    path: "new-yojana",
-                    element: <NewYojana />,
                 },
                 {
                     path: "inventory",

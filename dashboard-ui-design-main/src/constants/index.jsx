@@ -32,11 +32,7 @@ export const navbarLinks = [
                 icon: Package,
                 path: "/yojana",
             },
-            {
-                label: "New Yojana",
-                icon: Plus ,
-                path: "/new-yojana",
-            },
+            
             // {
             //     label: "Inventory",
             //     icon: ShoppingBag,
