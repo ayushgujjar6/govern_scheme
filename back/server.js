@@ -141,7 +141,77 @@ app.put("/api/yojana/:id", (req, res) => {
 });
 
 
+//------------------------------------------Taluka-----------------------------------------------------
 
+
+
+app.get('/api/taluka', (req,res) => {
+    db.query("SELECT * FROM taluka", (err,result) => {
+        if(err){
+            console.log("Error: ", err);
+            return res.status(500).json({error:"Database Error"});
+        }
+        res.json(result);
+    });
+});
+
+
+app.post("/api/new-taluka", (req, res) => {
+    const {taluka_id,taluka_name_eng,taluka_name_marathi, pincode } = req.body;
+
+    if (!taluka_name_eng || !taluka_name_marathi || !pincode) {
+        console.error("Validation Error: Missing fields");
+        return res.status(400).json({ error: "All fields are required!" });
+    }
+
+    const sql = `INSERT INTO tbl_yojana_type (taluka_id, taluka_name_eng, taluka_name_marathi, pincode, ins_date_time, update_date_time) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())`;
+    
+
+    db.query(sql, [category_id,sub_category_id,yojana_type, status, description, link], (err, result) => {
+        if (err) {
+            console.error("Database Insert Error:", err);  // Debugging
+            return res.status(500).json({ error: "Failed to add yojana", details: err.message });
+        }
+        res.json({ message: "Yojana added successfully", id: result.insertId });
+    });
+});
+
+
+app.delete("/api/yojana/:id", (req, res) => {
+    const { id } = req.params;
+    const sql = `DELETE FROM tbl_yojana_type WHERE yojana_type_id = ?`;
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error("Error deleting yojana:", err);
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).json({ message: "Yojana not found" });
+            return;
+        }
+        res.json({ message: "Yojana deleted successfully" });
+    });
+});
+
+
+
+app.put("/api/yojana/:id", (req, res) => {
+    const { id } = req.params;
+    const { yojana_type, status, description, link } = req.body;
+
+    const sql = `UPDATE tbl_yojana_type 
+                 SET yojana_type = ?, status = ?, description = ?, link = ?, update_date_time = NOW() 
+                 WHERE yojana_type_id = ?`;
+
+    db.query(sql, [yojana_type, status, description, link, id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ message: "Yojana updated successfully" });
+    });
+});
 
 
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { useTheme } from "@/hooks/use-theme";
-import { overviewData, recentSalesData, topProducts } from "@/constants";
 import { Footer } from "@/layouts/footer";
 import { CreditCard, DollarSign, Package, PencilLine, Star, Trash, TrendingUp, Users } from "lucide-react";
 import { useEffect,useState } from "react";
@@ -9,6 +8,29 @@ import { useEffect,useState } from "react";
 const DashboardPage = () => {
     const { theme } = useTheme();
     const [totalyojana, setTotalYojana] = useState();
+    const [filterSearch, setFilterSearch] = useState([]);
+
+    useEffect(()=> {
+        fetch("/api/schemes/search?query=")
+        .then((res)=> res.json())
+        .then((data)=>{
+            setScheme(data);
+            setFilterSearch(data);
+        })
+        .catch((err)=> console.error(err));
+    }, []);
+
+    const handleSearch = (query) => {
+        if(query){
+            fetch(`/api/schemes/search?query=${query}`)
+            .then((res)=> res.json())
+            .then((data)=> setFilterSearch((data)))
+            .catch((err))
+        }
+        else{
+            setFilterSearch(schemes);
+        }
+    };
     
 
     useEffect(() => {
@@ -41,7 +63,7 @@ const DashboardPage = () => {
                         <p className="text-3xl font-bold text-slate-900 transition-colors dark:text-slate-50">{totalyojana}</p>
                         <span className="flex w-fit items-center gap-x-2 rounded-full border border-blue-500 px-2 py-1 font-medium text-blue-500 dark:border-blue-600 dark:text-blue-600">
                             <TrendingUp size={18} />
-                            25%
+                            0
                         </span>
                     </div>
                 </div>
@@ -56,7 +78,7 @@ const DashboardPage = () => {
                         <p className="text-3xl font-bold text-slate-900 transition-colors dark:text-slate-50">0</p>
                         <span className="flex w-fit items-center gap-x-2 rounded-full border border-blue-500 px-2 py-1 font-medium text-blue-500 dark:border-blue-600 dark:text-blue-600">
                             <TrendingUp size={18} />
-                            19%
+                            0
                         </span>
                     </div>
                 </div>
@@ -71,7 +93,7 @@ const DashboardPage = () => {
                         <p className="text-3xl font-bold text-slate-900 transition-colors dark:text-slate-50">0</p>
                         <span className="flex w-fit items-center gap-x-2 rounded-full border border-blue-500 px-2 py-1 font-medium text-blue-500 dark:border-blue-600 dark:text-blue-600">
                             <TrendingUp size={18} />
-                            12%
+                            0
                         </span>
                     </div>
                 </div>
@@ -86,7 +108,7 @@ const DashboardPage = () => {
                         <p className="text-3xl font-bold text-slate-900 transition-colors dark:text-slate-50">0</p>
                         <span className="flex w-fit items-center gap-x-2 rounded-full border border-blue-500 px-2 py-1 font-medium text-blue-500 dark:border-blue-600 dark:text-blue-600">
                             <TrendingUp size={18} />
-                            15%
+                            0
                         </span>
                     </div>
                 </div>
